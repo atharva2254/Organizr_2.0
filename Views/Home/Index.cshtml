@@ -1,0 +1,217 @@
+﻿@{
+    ViewData["Title"] = "Home";
+    var userId = Context.Session.GetInt32("UserId");
+}
+@using Microsoft.AspNetCore.Http
+
+<section class="hero">
+
+    <div class="container">
+            
+            @if (TempData != null)
+            {
+                <p class="text-success">@TempData["LogoutMessage"]</p>
+            }
+        <div class="row align-items-center">
+
+            <div class="col-lg-6">
+
+                <span class="badge bg-primary mb-3 fs-6">
+                    Productivity Made Simple
+                </span>
+
+                <h1 class="mb-4">
+                    Organize Your Day
+                    <span class="gradient">Effortlessly.</span>
+                </h1>
+
+                <p class="mb-4">
+                    Keep track of your daily tasks, increase productivity,
+                    and stay focused with Organizr — your personal task manager.
+                </p>
+
+                <div class="d-flex gap-3">
+
+                    @if(userId == null)
+                    {
+                        
+                        <a asp-controller="User"
+                           asp-action="Create"
+                           class="btn btn-primary btn-lg px-4">
+
+                            <i class="bi bi-person-plus-fill"></i>
+
+                            Get Started
+
+                        </a>
+
+                        <a asp-controller="User"
+                           asp-action="Login"
+                           class="btn btn-outline-dark btn-lg px-4">
+
+                            <i class="bi bi-box-arrow-in-right"></i> 
+
+                            Login
+
+                        </a>
+
+                    }
+                    else
+                    {
+                        <a asp-controller="User"
+                           asp-action="Index"
+                           class="btn btn-primary btn-lg px-4">
+
+                            @* <i class="bi bi-person-plus-fill"></i> *@
+
+                            Go to Dashboard
+
+                        </a>
+                    }
+                </div>
+
+            </div>
+
+            <div class="col-lg-6 text-center">
+
+                <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?q=80&w=1200&auto=format&fit=crop"
+                     class="img-fluid rounded-4 shadow-lg"
+                     style="max-height:500px; object-fit:cover;" />
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <h2 class="fw-bold">
+                Why Choose Organizr?
+            </h2>
+
+            <p class="text-muted">
+                Everything you need to stay productive.
+            </p>
+
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+
+                <div class="feature-card p-4 h-100 text-center">
+
+                    <i class="bi bi-list-check display-4 text-primary"></i>
+
+                    <h4 class="mt-4">
+                        Manage Tasks
+                    </h4>
+
+                    <p class="text-muted">
+                        Create, edit and organize all your daily work from one place.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="feature-card p-4 h-100 text-center">
+
+                    <i class="bi bi-lightning-charge-fill display-4 text-warning"></i>
+
+                    <h4 class="mt-4">
+                        Boost Productivity
+                    </h4>
+
+                    <p class="text-muted">
+                        Focus on important work and accomplish more every day.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="feature-card p-4 h-100 text-center">
+
+                    <i class="bi bi-shield-check display-4 text-success"></i>
+
+                    <h4 class="mt-4">
+                        Secure
+                    </h4>
+
+                    <p class="text-muted">
+                        Your data stays organized, safe and accessible anytime.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="py-5 bg-white">
+
+    <div class="container">
+
+        <div class="row text-center">
+
+            <div class="col-md-3">
+
+                <h2 class="fw-bold text-primary">
+                    100%
+                </h2>
+
+                <p>Responsive</p>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <h2 class="fw-bold text-success">
+                    Fast
+                </h2>
+
+                <p>Performance</p>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <h2 class="fw-bold text-warning">
+                    Clean
+                </h2>
+
+                <p>Modern UI</p>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <h2 class="fw-bold text-danger">
+                    MVC
+                </h2>
+
+                <p>ASP.NET Core</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>

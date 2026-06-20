@@ -1,0 +1,42 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Task Page";
+}
+
+@model ICollection<TaskItem>
+
+<div class="container">
+    <div class="d-flex flex-column gap-5 justify-content-center">
+        <h1 class="text-center">Task's Table</h1>
+        <table class="table table-striped">
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Completed</th>
+                <th>Created At</th>
+                <th>User</th>
+            </tr>
+
+            @foreach (var task in Model)
+            {
+                var IsCompleted = task.IsCompleted ? "✅" : "❌";
+                <tr>
+                    <td>@task.Title</td>
+                    <td>@task.Description</td>
+                    <td>@IsCompleted</td>
+                    <td>@task.CreatedAt</td>
+                    <td>@task.User.Name</td>
+                </tr>
+            }
+        </table>
+
+        <div>
+            <a class="btn btn-primary text-decoration-none" asp-action="Create">Add Task</a>
+            <a class="btn btn-secondary text-decoration-none" asp-action="Index" asp-controller="User">View Users</a>
+
+        </div>
+    </div>
+</div>
+

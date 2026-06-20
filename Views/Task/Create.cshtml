@@ -1,0 +1,111 @@
+﻿@model TaskItem
+
+@{
+    ViewData["Title"] = "Add Task";
+}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-7">
+
+            <div class="card border-0 shadow-lg rounded-4">
+
+                <div class="card-header bg-primary text-white rounded-top-4 py-4">
+
+                    <h3 class="mb-0">
+                        <i class="bi bi-plus-circle-fill me-2"></i>
+                        Add New Task
+                    </h3>
+
+                </div>
+
+                <div class="card-body p-5">
+
+                    <form asp-action="Create" method="post">
+
+                        <div asp-validation-summary="ModelOnly"
+                             class="alert alert-danger"></div>
+
+                        <div class="mb-4">
+
+                            <label asp-for="Title" class="form-label fw-semibold"></label>
+
+                            <input asp-for="Title"
+                                   class="form-control form-control-lg"
+                                   placeholder="Enter task title..." />
+
+                            <span asp-validation-for="Title"
+                                  class="text-danger"></span>
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label asp-for="Description"
+                                   class="form-label fw-semibold"></label>
+
+                            <textarea asp-for="Description"
+                                      rows="5"
+                                      class="form-control"
+                                      placeholder="Describe your task..."></textarea>
+
+                            <span asp-validation-for="Description"
+                                  class="text-danger"></span>
+
+                        </div>
+
+                        <div class="form-check form-switch mb-4">
+
+                            <input asp-for="IsCompleted"
+                                   class="form-check-input" />
+
+                            <label asp-for="IsCompleted"
+                                   class="form-check-label">
+
+                                Mark as Completed
+
+                            </label>
+
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+
+                            <a asp-controller="User"
+                               asp-action="Index"
+                               class="btn btn-outline-secondary px-4">
+
+                                <i class="bi bi-arrow-left"></i>
+
+                                Back
+
+                            </a>
+
+                            <button class="btn btn-primary px-5" type="submit">
+
+                                <i class="bi bi-check-circle"></i>
+
+                                Save Task
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+}
