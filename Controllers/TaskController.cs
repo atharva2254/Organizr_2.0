@@ -83,6 +83,7 @@ namespace Organizr.Controllers
             existingTask.IsCompleted = task.IsCompleted;
 
             await _context.SaveChangesAsync();
+            TempData["Success"] = "Task Updated";
             return RedirectToAction("Index", "User");
         }
 
