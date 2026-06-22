@@ -8,7 +8,7 @@ namespace Organizr.Models
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(50)]
+        [MaxLength(20)]
         public string Name { get; set; } = string.Empty;
 
         [Required]
@@ -16,10 +16,11 @@ namespace Organizr.Models
         public string Email { get; set; } = string.Empty;
 
         [Required]
+        [DataType(DataType.Password)]
         public string PasswordHash { get; set; } = string.Empty;
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-        public ICollection<TaskItem>? Tasks { get; set; } = new List<TaskItem>();
+        public ICollection<TaskItem> Tasks { get; set; } = new List<TaskItem>();
     }
 }

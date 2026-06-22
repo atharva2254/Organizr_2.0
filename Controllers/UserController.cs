@@ -3,6 +3,8 @@ using Organizr.Models;
 using Microsoft.EntityFrameworkCore;
 using Organizr.Data;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace Organizr.Controllers
 {
@@ -61,19 +63,25 @@ namespace Organizr.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Login(User user)
         {
-            var sessionUser = _context.Users.Where(u=> u.Email == user.Email).FirstOrDefault();
+            var sessionUser = _context.Users.FirstOrDefault(u => u.Email == user.Email);
 
-            if(sessionUser != null)
+            if (sessionUser == null)
             {
-                HttpContext.Session.SetInt32("UserId", sessionUser.Id);
-                TempData["Success"] = "Login Successful";
-                return RedirectToAction("Index");
+                TempData["Error"] = "User does not exists";
+                return View();
             }
-            else
+            var passwordHasher = new PasswordHasher<User>();
+            var result = passwordHasher.VerifyHashedPassword(sessionUser, sessionUser.PasswordHash, user.PasswordHash);
+
+            if (result == PasswordVerificationResult.Failed)
             {
-                TempData["Error"] = "Invalid email or username";
+                TempData["Error"] = "Invalid email or password";
+                return View();
             }
-            return View();
+
+            HttpContext.Session.SetInt32("UserId", sessionUser.Id);
+            TempData["Success"] = "Login Successful";
+            return RedirectToAction("Index");
         }
 
         public IActionResult LogoutUser()
@@ -99,6 +107,9 @@ namespace Organizr.Controllers
         {
             if (ModelState.IsValid)
             {
+                var passwordHasher = new PasswordHasher<User>();
+                user.PasswordHash = passwordHasher.HashPassword(user, user.PasswordHash);
+
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
 
