@@ -2,7 +2,16 @@
     ViewData["Title"] = "Dashboard";
 }
 @model User
-@* @{List<Model.Tasks> tasks = new List<Model.Tasks}; *@
+
+@{
+    int completedTask = Convert.ToInt16(ViewBag.CompletedTask);
+    int totalTask = Convert.ToInt16(ViewBag.TaskCount);
+    int pendingTask = Convert.ToInt16(ViewBag.PendingTask);
+    int progress = totalTask == 0
+    ? 0
+    : (int)((double)completedTask / totalTask * 100);
+}
+
 <div class="container py-5">
 
     <!-- Welcome -->
@@ -47,7 +56,7 @@
                         <small>Total Tasks</small>
 
                         <h2 class="fw-bold mt-2">
-                            @ViewBag.TaskCount
+                            @totalTask
                         </h2>
 
                     </div>
@@ -71,7 +80,7 @@
                         <small>Completed</small>
 
                         <h2 class="text-success fw-bold mt-2">
-                            @ViewBag.CompletedTask
+                            @completedTask
                         </h2>
 
                     </div>
@@ -95,7 +104,7 @@
                         <small>Pending</small>
 
                         <h2 class="text-warning fw-bold mt-2">
-                            @ViewBag.PendingTask
+                            @pendingTask
                         </h2>
 
                     </div>
@@ -119,7 +128,7 @@
                         <small>Progress</small>
 
                         <h2 class="text-primary fw-bold mt-2">
-                            67%
+                            @progress%
                         </h2>
 
                     </div>
@@ -180,7 +189,7 @@
                 </h3>
 
                 <small class="text-muted">
-                    @Model.Tasks.Count() Tasks
+                    @totalTask Tasks
                 </small>
 
             </div>
@@ -229,19 +238,20 @@
                         <!-- Status -->
 
                         <div class="col-md-1 text-center">
+                                <form asp-action="UpdateStatus" asp-controller="Task" method="post" class="d-inline">
+                                    @Html.AntiForgeryToken()
 
-                            @if (task.IsCompleted)
-                            {
-                                <span class="status-circle completed">
+                                    <input type="hidden" name="id" value="@task.Id" />
 
-                                    <i class="bi bi-check-lg"></i>
+                                    <label class="task-checkbox">
+                                        <input type="checkbox" @(task.IsCompleted ? "checked" : "")
+                                               onchange="this.form.submit();" />
 
-                                </span>
-                            }
-                            else
-                            {
-                                <span class="status-circle pending"></span>
-                            }
+                                        <span class="checkmark">
+                                            <i class="bi bi-check-lg"></i>
+                                        </span>
+                                    </label>
+                                </form>
 
                         </div>
 

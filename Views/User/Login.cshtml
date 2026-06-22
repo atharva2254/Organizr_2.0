@@ -8,8 +8,6 @@
             <div class="card shadow border-0 rounded-4">
                 <div class="card-body p-4">
                     <h2 class="text-center mb-4">Welcome Back</h2>
-                    <span class="text-danger">@ViewBag?.Message</span>
-                    @* <span class="text-success">@ViewBag?.Message</span> *@
                     <form asp-action="Login" method="post">
                         <div class="mb-3">
                             <label asp-for="Email"></label>

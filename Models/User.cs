@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using System.Runtime.InteropServices;
 
 namespace Organizr.Models
 {
@@ -19,7 +18,7 @@ namespace Organizr.Models
         [Required]
         public string PasswordHash { get; set; } = string.Empty;
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         public ICollection<TaskItem>? Tasks { get; set; } = new List<TaskItem>();
     }

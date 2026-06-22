@@ -2,6 +2,7 @@
 using Organizr.Models;
 using Microsoft.EntityFrameworkCore;
 using Organizr.Data;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Organizr.Controllers
 {
@@ -23,6 +24,7 @@ namespace Organizr.Controllers
             {
                 return RedirectToAction("Login");
             }
+
             
             var user = _context.Users.Include(u => u.Tasks).FirstOrDefault(u => u.Id == userId);
             if(user == null)
@@ -30,9 +32,9 @@ namespace Organizr.Controllers
                 return NotFound();
             }
 
-            var taskCount = user.Tasks.Count();
-            var completedTask = user.Tasks.Count(t => t.IsCompleted);
-            var Pending = user.Tasks.Count(t => !t.IsCompleted);
+            var taskCount = user.Tasks?.Count();
+            var completedTask = user.Tasks?.Count(t => t.IsCompleted);
+            var Pending = user.Tasks?.Count(t => !t.IsCompleted);
 
                
             ViewBag.TaskCount = taskCount;
@@ -59,15 +61,17 @@ namespace Organizr.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Login(User user)
         {
-            var sessionUser = _context.Users.Where(u=> u.Email == user.Email && u.PasswordHash == user.PasswordHash).FirstOrDefault();
+            var sessionUser = _context.Users.Where(u=> u.Email == user.Email).FirstOrDefault();
+
             if(sessionUser != null)
             {
                 HttpContext.Session.SetInt32("UserId", sessionUser.Id);
+                TempData["Success"] = "Login Successful";
                 return RedirectToAction("Index");
             }
             else
             {
-                ViewBag.Message = "Invalid email or username";
+                TempData["Error"] = "Invalid email or username";
             }
             return View();
         }
@@ -78,7 +82,7 @@ namespace Organizr.Controllers
             {
                 HttpContext.Session.Clear();
             }
-            TempData["LogoutMessage"] = "Logout Successfull";
+            TempData["Success"] = "Logout Successfull";
 
             return RedirectToAction("Index", "Home");
             //return Content("Logout Successful");
@@ -98,7 +102,7 @@ namespace Organizr.Controllers
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
 
-                ViewBag.Message = "Registration Successful. Please Login";
+                TempData["Success"] = "Registration Successful. Please Login";
                 return RedirectToAction("Index");
             }
 

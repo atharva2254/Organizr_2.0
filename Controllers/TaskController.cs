@@ -22,9 +22,13 @@ namespace Organizr.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var tasks = await _context.TaskItems.Where(u => u.UserId == id).ToListAsync();
+            var task = await _context.TaskItems.FindAsync(id);
+            if(task == null)
+            {
+                return NotFound();
+            }
 
-            return View(tasks);
+            return View(task);
         }
         public IActionResult Create()
         {
@@ -47,6 +51,7 @@ namespace Organizr.Controllers
             {
                 _context.TaskItems.Add(task);
                 await _context.SaveChangesAsync();
+                TempData["Info"] = "Task Added";
                 return RedirectToAction("Index", "User");
             }
 
@@ -92,6 +97,24 @@ namespace Organizr.Controllers
             }
 
             _context.TaskItems.Remove(task);
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Task Deleted Successfully";
+
+            return RedirectToAction("Index", "User");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateStatus(int id)
+        {
+            var task = await _context.TaskItems.FindAsync(id);
+
+            if(task== null)
+            {
+                return NotFound();
+            }
+
+            task.IsCompleted = !task.IsCompleted;
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index", "User");

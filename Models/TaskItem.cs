@@ -14,7 +14,7 @@ namespace Organizr.Models
 
         public bool IsCompleted { get; set; } = false;
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         public int? UserId { get; set; }
         public User? User { get; set; } = null!;

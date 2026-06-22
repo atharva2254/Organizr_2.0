@@ -27,7 +27,7 @@
                     <td>@task.Description</td>
                     <td>@IsCompleted</td>
                     <td>@task.CreatedAt</td>
-                    <td>@task.User.Name</td>
+                    <td>@task.User?.Name</td>
                 </tr>
             }
         </table>

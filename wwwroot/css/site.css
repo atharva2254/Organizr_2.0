@@ -190,3 +190,65 @@ section {
 .card {
     border-radius: 20px;
 }
+
+.task-checkbox {
+    cursor: pointer;
+    display: inline-block;
+}
+
+    .task-checkbox input {
+        display: none;
+    }
+
+.checkmark {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid #ced4da;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .25s ease;
+    background: #fff;
+}
+
+    .checkmark i {
+        color: white;
+        font-size: 15px;
+        opacity: 0;
+        transition: opacity .2s ease;
+    }
+
+.task-checkbox input:checked + .checkmark {
+    background: #198754;
+    border-color: #198754;
+    transform: scale(1.08);
+}
+
+    .task-checkbox input:checked + .checkmark i {
+        opacity: 1;
+    }
+
+.task-checkbox:hover .checkmark {
+    border-color: #198754;
+    box-shadow: 0 0 0 4px rgba(25,135,84,.15);
+}
+
+.toast {
+    border-radius: 15px;
+    min-width: 320px;
+    animation: slideIn .4s ease;
+}
+
+@keyframes slideIn {
+
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
